@@ -16,8 +16,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Determina l'ambiente corrente
-ENVIRONMENT = "production"
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 
 # Carica il file .env appropriato
 if ENVIRONMENT == "production":
@@ -27,20 +30,19 @@ else:
 
 load_dotenv(dotenv_path)
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = ENVIRONMENT != "production"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["your-production-domain.com"] if ENVIRONMENT == "production" else ["*"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -114,8 +116,11 @@ DATABASES = {
         "PASSWORD": os.getenv("PASSWORD"),
         "HOST": os.getenv("HOST"),
         "PORT": os.getenv("PORT"),
+        "CONN_MAX_AGE": 600,  # 10 minutes
+        "OPTIONS": {"sslmode": "require", "connect_timeout": 10},
     }
 }
+CONN_HEALTH_CHECKS = True
 
 
 # Password validation
@@ -153,12 +158,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Attenzione
+# CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# Security settings
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_SSL_REDIRECT = ENVIRONMENT == "production"
+CSRF_COOKIE_SECURE = ENVIRONMENT == "production"
+SESSION_COOKIE_SECURE = ENVIRONMENT == "production"
