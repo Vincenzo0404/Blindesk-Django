@@ -117,7 +117,6 @@ DATABASES = {
         "HOST": os.getenv("HOST"),
         "PORT": os.getenv("PORT"),
         "CONN_MAX_AGE": 600,  # 10 minutes
-        "OPTIONS": {"sslmode": "require", "connect_timeout": 10},
     }
 }
 CONN_HEALTH_CHECKS = True
