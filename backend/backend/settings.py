@@ -16,19 +16,13 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Determina l'ambiente corrente
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-
-# Carica il file .env appropriato
-if ENVIRONMENT == "production":
-    dotenv_path = Path(".env.production")
-else:
-    dotenv_path = Path(".env.development")
-
-load_dotenv(dotenv_path)
 
 
 # Quick-start development settings - unsuitable for production
