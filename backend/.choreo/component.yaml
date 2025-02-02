@@ -5,6 +5,7 @@ endpoints:
     service:
       basePath: /
       port: 8000
-      type: REST
+    type: REST
     networkVisibilities:
       - Public
+    schemaFilePath: .
