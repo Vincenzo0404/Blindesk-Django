@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ENVIRONMENT != "production"
 
-ALLOWED_HOSTS = ["your-production-domain.com"] if ENVIRONMENT == "production" else ["*"]
+ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
