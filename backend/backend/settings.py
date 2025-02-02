@@ -30,7 +30,7 @@ ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv(
-    "SECRET_KEY", "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
+    "SECRET_KEY", "65eo4tg767og_=r9a=c)$5$^e9z48jpe3oesa2iv-#$ba-byv-"
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -105,11 +105,11 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("NAME"),
-        "USER": os.getenv("USER"),
-        "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PWD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
         "CONN_MAX_AGE": 600,  # 10 minutes
     }
 }
