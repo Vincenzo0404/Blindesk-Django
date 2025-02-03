@@ -8,13 +8,13 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function Logout() {
   localStorage.clear();
-  return <Navigate to="/login" />;
+  return <Navigate to="/" />;
 }
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/logout" element={<Logout />} />
