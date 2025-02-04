@@ -1,7 +1,8 @@
 from django.db import models
 
 from .customer import Customer
-from .log_job_stage import LogJobStage
+
+# from .log_job_stage import LogJobStage
 
 
 class Job(models.Model):
@@ -28,8 +29,8 @@ class Job(models.Model):
     date_arrived_goods = models.DateField()
     date_closed = models.DateField()
 
-    def get_stage(self):
-        return LogJobStage.objects.filter(id_job=self.id).order_by("-started_at")[0]
+    # def get_stage(self):
+    #     return LogJobStage.objects.filter(id_job=self.id).order_by("-started_at")[0]
 
     def __str__(self):
         return f"Commessa {self.id} - {self.stage}"
