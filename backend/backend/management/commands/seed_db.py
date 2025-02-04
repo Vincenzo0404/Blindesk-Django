@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
 
-from backend.management.commands.seeders.customer_seeder import CustomerSeeder
-from backend.management.commands.seeders.seeder import Seeder
+from backend.backend.management.commands.factories.customer_factory import (
+    CustomerFactory,
+)
+from backend.management.commands.factories.seeder import Seeder
 
 SEEDERS = {
-    "customer": CustomerSeeder,
+    "customer": CustomerFactory,
 }
 
 

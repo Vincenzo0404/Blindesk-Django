@@ -3,12 +3,12 @@ import random
 from api.models import Customer
 from faker import Faker
 
-from backend.management.commands.seeders.seeder import Seeder
+from backend.management.commands.factories.seeder import Seeder
 
 fake = Faker()
 
 
-class CustomerSeeder(Seeder):
+class CustomerFactory(Seeder):
     """Seeder for Customer table"""
 
     def __init__(self):
