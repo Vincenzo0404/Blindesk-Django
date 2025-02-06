@@ -14,7 +14,7 @@ class CustomerFactory(Seeder):
     def __init__(self):
         super().__init__(Customer)
 
-    def generate_data(self, count):
+    def generate_data(self, count=40):
         return [
             Customer(
                 name=fake.first_name(),

@@ -1,12 +1,20 @@
 from django.core.management.base import BaseCommand
 
-from backend.backend.management.commands.factories.customer_factory import (
-    CustomerFactory,
-)
-from backend.management.commands.factories.seeder import Seeder
+from backend.management.commands.factories import *
 
 SEEDERS = {
     "customer": CustomerFactory,
+    "category": CategoryFactory,
+    "supplier": SupplierFactory,
+    "product": ProductFactory,
+    "order": OrderFactory,
+    "orderdetail": OrderDetailFactory,
+    "feature": FeatureFactory,
+    "job": JobFactory,
+    "jobstage": JobStageFactory,
+    "logjobstage": LogJobStageFactory,
+    "monetization": MonetizationFactory,
+    "productfeature": ProductFeatureFactory,
 }
 
 
@@ -27,9 +35,16 @@ class Command(BaseCommand):
         count = kwargs["count"]
 
         if table == "all":
-            Seeder.seed_all([seeder() for seeder in SEEDERS.values()])
+            self.seed_all([seeder() for seeder in SEEDERS.values()])
         elif table in SEEDERS:
             seeder = SEEDERS[table]()
             seeder.seed(count)
         else:
             self.stdout.write(self.style.ERROR(f"❌ Seeder per {table} non trovato!"))
+
+    @classmethod
+    def seed_all(cls, seeders):
+        """Esegue il seeding per tutte le tabelle registrate"""
+        for seeder in seeders:
+            seeder.seed()
+        print("✅ Seeding completato per tutte le tabelle!")
