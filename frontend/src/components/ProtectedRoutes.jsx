@@ -3,8 +3,9 @@ import { jwtDecode } from "jwt-decode";
 import api from "../api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
+import ToolPad from "./ToolPad";
 
-function ProtectedRoutes() {
+function ProtectedRoutes(window) {
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
@@ -50,7 +51,16 @@ function ProtectedRoutes() {
     return <div>🔄 Caricamento...</div>;
   }
 
-  return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
+  if (isAuthorized === false) {
+    return <Navigate to="/login" />;
+  } else {
+    return (
+      <>
+        <ToolPad />
+        <Outlet />
+      </>
+    );
+  }
 }
 
 export default ProtectedRoutes;
