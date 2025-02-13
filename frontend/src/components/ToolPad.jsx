@@ -1,21 +1,11 @@
 import * as React from "react";
 import { extendTheme, styled } from "@mui/material/styles";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import DescriptionIcon from "@mui/icons-material/Description";
-import PeopleIcon from "@mui/icons-material/People";
-import LayersIcon from "@mui/icons-material/Layers";
-import SettingsIcon from "@mui/icons-material/Settings";
+import PersonSharpIcon from "@mui/icons-material/PersonSharp";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 import { AppProvider } from "@toolpad/core";
 import { DashboardLayout } from "@toolpad/core";
 import { PageContainer } from "@toolpad/core";
 import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 import { Outlet } from "react-router-dom";
 import logo from "../assets/logo-trasparente.png";
 
@@ -25,39 +15,23 @@ const NAVIGATION = [
     title: "Menu",
   },
   {
-    segment: "customers",
-    title: "customers",
-    icon: <DashboardIcon />,
+    segment: "customer",
+    title: "clienti",
+    icon: <PersonSharpIcon />,
   },
-  // {
-  //   segment: "orders",
-  //   title: "Orders",
-  //   icon: <ShoppingCartIcon />,
-  // },
-  // {
-  //   kind: "divider",
-  // },
-  // {
-  //   kind: "header",
-  //   title: "Analytics",
-  // },
-  // {
-  //   segment: "reports",
-  //   title: "Reports",
-  //   icon: <BarChartIcon />,
-  //   children: [
-  //     {
-  //       segment: "sales",
-  //       title: "Sales",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //     {
-  //       segment: "traffic",
-  //       title: "Traffic",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //   ],
-  // },
+  {
+    segment: "job",
+    title: "Commesse",
+    icon: <PersonSharpIcon />,
+  },
+  {
+    kind: "divider",
+  },
+  {
+    segment: "category",
+    title: "Categorie",
+    icon: <Inventory2Icon />,
+  },
 ];
 
 const demoTheme = extendTheme({
@@ -97,7 +71,7 @@ export default function ToolPad(props) {
     >
       <DashboardLayout>
         <PageContainer>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             <Outlet />
           </Grid>
         </PageContainer>

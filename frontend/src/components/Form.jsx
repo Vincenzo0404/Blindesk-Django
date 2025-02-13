@@ -13,7 +13,7 @@ function Form() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || "/home"; // Salva la pagina precedente
+  const from = location.state?.from || "/customers"; // Salva la pagina precedente
 
   const handleSubmit = async (e) => {
     e.preventDefault();

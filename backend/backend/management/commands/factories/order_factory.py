@@ -19,8 +19,8 @@ class OrderFactory(Seeder):
         products = list(Product.objects.all())
         return [
             Order(
-                id_job=random.choice(jobs),
-                id_product=random.choice(products),
+                job=random.choice(jobs),
+                product=random.choice(products),
                 q_t=fake.random_int(min=1, max=20),
                 discount=fake.random_int(min=0, max=100),
             )

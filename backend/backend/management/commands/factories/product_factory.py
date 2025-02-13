@@ -20,8 +20,8 @@ class ProductFactory(Seeder):
         return [
             Product(
                 name=fake.word(),
-                id_category=random.choice(categories),
-                id_supplier=random.choice(suppliers),
+                category=random.choice(categories),
+                supplier=random.choice(suppliers),
             )
             for _ in range(count)
         ]

@@ -11,8 +11,6 @@ SEEDERS = {
     "orderdetail": OrderDetailFactory,
     "feature": FeatureFactory,
     "job": JobFactory,
-    "jobstage": JobStageFactory,
-    "logjobstage": LogJobStageFactory,
     "monetization": MonetizationFactory,
     "productfeature": ProductFeatureFactory,
 }

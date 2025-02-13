@@ -22,7 +22,7 @@ class MonetizationFactory(Seeder):
         )
         return [
             Monetization(
-                id_product=random.choice(products),
+                product=random.choice(products),
                 unit_cost=unit_cost,
                 unit_price=unit_price,
                 started_at=fake.date_time(),

@@ -11,6 +11,16 @@ fake = Faker()
 class JobFactory(Seeder):
     """Seeder for Job table"""
 
+    STAGES = [
+        ("estimate done", "Estimate"),
+        ("estimate_accepted", "Estimate accepted"),
+        ("sent_order", "Sent order"),
+        ("received_cdo", "Received CDO"),
+        ("confirmed_order", "Confirmed order"),
+        ("arrived_goods", "Arrived goods"),
+        ("closed", "Closed"),
+    ]
+
     def __init__(self):
         super().__init__(Job)
 
@@ -18,9 +28,10 @@ class JobFactory(Seeder):
         customers = list(Customer.objects.all())
         return [
             Job(
-                id_customer=random.choice(customers),
+                customer=random.choice(customers),
                 city=fake.city(),
                 address=fake.address(),
+                stage=random.choice(self.STAGES)[0],
             )
             for _ in range(count)
         ]

@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Customers from "./pages/Customers";
+import Customer from "./pages/Customer";
+import Category from "./pages/Category";
+import Job from "./pages/Job";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function Logout() {
@@ -12,11 +14,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Customers />} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<Customer />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/customers" element={<Customers />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/job" element={<Job />} />
+          <Route path="/category" element={<Category />} />
         </Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

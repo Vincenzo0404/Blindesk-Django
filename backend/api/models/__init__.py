@@ -2,8 +2,6 @@ from .category import Category
 from .customer import Customer
 from .feature import Feature
 from .job import Job
-from .job_stage import JobStage
-from .log_job_stage import LogJobStage
 from .monetization import Monetization
 from .order import Order
 from .order_detail import OrderDetail

@@ -19,8 +19,8 @@ class ProductFeatureFactory(Seeder):
         features = list(Feature.objects.all())
         return [
             ProductFeature(
-                id_product=random.choice(products),
-                id_feature=random.choice(features),
+                product=random.choice(products),
+                feature=random.choice(features),
                 value=fake.word(),
             )
             for _ in range(count)

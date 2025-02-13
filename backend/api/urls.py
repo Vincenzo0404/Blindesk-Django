@@ -1,16 +1,17 @@
 # fmt: off
 from django.urls import path
 
-from .views import CustomerDelete, CustomerList, CustomerUpdate
+from .views import *
 
 # fmt: on
 
 urlpatterns = [
-    path("customers/", CustomerList.as_view(), name="customer-list"),
-    path(
-        "customers/<int:pk>/update/", CustomerUpdate.as_view(), name="customer-update"
-    ),
-    path(
-        "customers/<int:pk>/delete/", CustomerDelete.as_view(), name="customer-delete"
-    ),
+    # Customers
+    path("customer/list/", CustomerList.as_view(), name="customer-list"),
+    path("customer/update/<int:pk>/", CustomerUpdate.as_view(), name="customer-update"),
+    path("customer/delete/<int:pk>/", CustomerDelete.as_view(), name="customer-delete"),
+    path("customer/create/", CustomerCreate.as_view(), name="customer-create"),
+    # Jobs
+    path("job/list/", JobList.as_view(), name="job-list"),
+    path("job/create/", JobCreate.as_view(), name="job-create"),
 ]

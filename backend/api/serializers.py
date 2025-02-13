@@ -22,6 +22,15 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class JobSerializer(serializers.ModelSerializer):
+    customer_name = serializers.CharField(source="customer.name", read_only=True)
+    customer_surname = serializers.CharField(source="customer.surname", read_only=True)
+
+    class Meta:
+        model = Job
+        fields = "__all__"
+
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
@@ -43,24 +52,6 @@ class CategorySerializer(serializers.ModelSerializer):
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
-        fields = "__all__"
-
-
-class JobSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Job
-        fields = "__all__"
-
-
-class JobStageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = JobStage
-        fields = "__all__"
-
-
-class LogJobStageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = LogJobStage
         fields = "__all__"
 
 

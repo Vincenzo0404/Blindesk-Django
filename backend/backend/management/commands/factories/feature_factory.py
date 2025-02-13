@@ -19,7 +19,7 @@ class FeatureFactory(Seeder):
         return [
             Feature(
                 name=fake.word(),
-                id_category=random.choice(categories) if categories else None,
+                category=random.choice(categories) if categories else None,
             )
             for _ in range(count)
         ]

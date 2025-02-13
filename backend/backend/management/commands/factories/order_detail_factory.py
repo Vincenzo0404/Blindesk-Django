@@ -22,8 +22,8 @@ class OrderDetailFactory(Seeder):
         # feature = random.choice(order.id_product.id_category.features)
         return [
             OrderDetail(
-                id_order=random.choice(orders),
-                id_feature=random.choice(features),
+                order=random.choice(orders),
+                feature=random.choice(features),
                 value=fake.word(),
             )
             for _ in range(count)
