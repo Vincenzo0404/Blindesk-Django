@@ -1,13 +1,38 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, FormControl, Autocomplete } from "@mui/material";
+import PropTypes from "prop-types";
+import {
+  TextField,
+  FormControl,
+  Autocomplete,
+  MenuItem,
+  Select,
+  InputLabel,
+} from "@mui/material";
 import api from "../api";
+import Form from "./Form";
 
-const JobForm = (onClose) => {
+const cities = [
+  "Roma",
+  "Milano",
+  "Napoli",
+  "Torino",
+  "Palermo",
+  "Genova",
+  "Bologna",
+  "Firenze",
+  "Bari",
+  "Catania",
+  // Aggiungi altre città italiane qui
+];
+
+const JobForm = ({ open, onClose }) => {
   const [customers, setCustomers] = useState([]);
   const [formData, setFormData] = useState({
     customer: "",
     stage: "",
     created_at: "",
+    city: "",
+    address: "",
   });
 
   useEffect(() => {
@@ -17,13 +42,6 @@ const JobForm = (onClose) => {
       .catch((error) => console.error("Error fetching customers:", error));
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleCustomerChange = (event, value) => {
     setFormData({
       ...formData,
@@ -31,8 +49,15 @@ const JobForm = (onClose) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
     api
       .post("/api/job/create/", formData)
       .then((response) => {
@@ -46,7 +71,12 @@ const JobForm = (onClose) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form
+      title="Nuova Comessa"
+      onSubmit={handleSubmit}
+      open={open}
+      onClose={onClose}
+    >
       <FormControl fullWidth margin="normal">
         <Autocomplete
           options={customers}
@@ -55,14 +85,31 @@ const JobForm = (onClose) => {
           renderInput={(params) => <TextField {...params} label="Customer" />}
         />
       </FormControl>
-      <Button type="submit" variant="contained" color="primary">
-        Submit
-      </Button>
-      <Button onClick={onClose} variant="outlined" color="secondary">
-        Cancel
-      </Button>
-    </form>
+      <FormControl fullWidth margin="normal">
+        <InputLabel>Città</InputLabel>
+        <Select name="city" value={formData.city} onChange={handleChange}>
+          {cities.map((city) => (
+            <MenuItem key={city} value={city}>
+              {city}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth margin="normal">
+        <TextField
+          label="Via"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+      </FormControl>
+    </Form>
   );
+};
+
+JobForm.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default JobForm;

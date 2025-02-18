@@ -5,7 +5,7 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
 import ToolPad from "./ToolPad";
 
-function ProtectedRoutes(window) {
+function ProtectedRoutes() {
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {

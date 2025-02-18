@@ -1,5 +1,4 @@
-import * as React from "react";
-import { extendTheme, styled } from "@mui/material/styles";
+import { extendTheme } from "@mui/material/styles";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import { AppProvider } from "@toolpad/core";
@@ -48,17 +47,7 @@ const demoTheme = extendTheme({
   },
 });
 
-const height = 8;
-const Skeleton = styled("div")(({ theme, height }) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderRadius: theme.shape.borderRadius,
-  height,
-  content: '" "',
-}));
-
-export default function ToolPad(props) {
-  const { window } = props;
-
+export default function ToolPad() {
   return (
     <AppProvider
       navigation={NAVIGATION}

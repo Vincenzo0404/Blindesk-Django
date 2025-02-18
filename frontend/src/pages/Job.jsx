@@ -10,16 +10,17 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
 } from "@mui/material";
 import JobForm from "../components/JobForm";
+import JobDetail from "../components/JobDetail";
+import { format } from "date-fns";
 
 export default function OrderGrid() {
   const [jobs, setJobs] = useState([]);
   const [sortType, setSortType] = useState("date"); // Ordinamento predefinito
-  const [open, setOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
     api
@@ -45,11 +46,27 @@ export default function OrderGrid() {
   };
 
   const handleOpen = () => {
-    setOpen(true);
+    setFormOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setFormOpen(false);
+    api
+      .get(`/api/job/list/`)
+      .then((response) => response.data)
+      .then((data) => {
+        setJobs(data);
+      });
+  };
+
+  const handleJobDetailOpen = (job) => {
+    setSelectedJob(job);
+    setDetailOpen(true);
+  };
+
+  const handleJobDetailClose = () => {
+    setDetailOpen(false);
+    setSelectedJob(null);
     api
       .get(`/api/job/list/`)
       .then((response) => response.data)
@@ -71,13 +88,14 @@ export default function OrderGrid() {
       <Button variant="outlined" onClick={handleOpen}>
         + Nuova
       </Button>
-
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Nuova Comessa</DialogTitle>
-        <DialogContent>
-          <JobForm onClose={handleClose} />
-        </DialogContent>
-      </Dialog>
+      <JobForm open={formOpen} onClose={handleClose} />
+      {selectedJob && (
+        <JobDetail
+          job={selectedJob}
+          open={detailOpen}
+          onClose={handleJobDetailClose}
+        />
+      )}
 
       {/* Griglia di commesse */}
       <Grid container spacing={2}>
@@ -91,10 +109,12 @@ export default function OrderGrid() {
                 minHeight: 120,
               }}
             >
-              <CardContent>
+              <CardContent onClick={() => handleJobDetailOpen(job)}>
                 <Typography variant="h6">{`${job.customer_name} ${job.customer_surname}`}</Typography>
                 <Typography variant="body2">Stato: {job.stage}</Typography>
-                <Typography variant="body2">Data: {job.created_at}</Typography>
+                <Typography variant="body2">
+                  Data: {format(new Date(job.created_at), "dd/MM/yyyy")}
+                </Typography>
               </CardContent>
             </Card>
           </Grid>

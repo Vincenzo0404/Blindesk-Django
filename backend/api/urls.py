@@ -14,4 +14,7 @@ urlpatterns = [
     # Jobs
     path("job/list/", JobList.as_view(), name="job-list"),
     path("job/create/", JobCreate.as_view(), name="job-create"),
+    path("job/update/<int:pk>/", JobUpdate.as_view(), name="job-update"),
+    path("job/delete/<int:pk>/", JobDelete.as_view(), name="job-delete"),
+    path("job/stage-choices/", JobStageChoices.as_view(), name="job-stage-choices"),
 ]

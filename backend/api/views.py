@@ -53,3 +53,24 @@ class JobCreate(generics.ListCreateAPIView):
             {"success": False, "errors": form.errors},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+
+class JobUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class JobDelete(generics.DestroyAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class JobStageChoices(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        choices = Job.STAGES
+        data = [{"value": choice[0], "label": choice[1]} for choice in choices]
+        return Response(data)
