@@ -11,19 +11,7 @@ import {
 import api from "../api";
 import Form from "./Form";
 
-const cities = [
-  "Roma",
-  "Milano",
-  "Napoli",
-  "Torino",
-  "Palermo",
-  "Genova",
-  "Bologna",
-  "Firenze",
-  "Bari",
-  "Catania",
-  // Aggiungi altre città italiane qui
-];
+const cities = ["Roma", "Aquila"];
 
 const JobForm = ({ open, onClose }) => {
   const [customers, setCustomers] = useState([]);

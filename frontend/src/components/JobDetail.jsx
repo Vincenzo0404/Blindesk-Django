@@ -28,9 +28,9 @@ const JobDetail = ({ job, open, onClose }) => {
   };
 
   const handleSubmit = () => {
-    console.log("Updating job:", job.id, status);
+    console.log(job);
     api
-      .put(`/api/job/update/${job.id}/`, { stage: status }) // Cambia da post a put
+      .put(`/api/job/update/${job.id}/`, { stage: status })
       .then((response) => {
         if (response.data.success) {
           onClose();
@@ -48,7 +48,7 @@ const JobDetail = ({ job, open, onClose }) => {
       open={open}
       onClose={onClose}
     >
-      <FormControl fullWidth margin="normal">
+      <FormControl required fullWidth margin="normal">
         <TextField
           label="Cliente"
           value={`${job.customer_name} ${job.customer_surname}`}

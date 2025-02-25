@@ -5,8 +5,15 @@ from .category import Category
 
 class Feature(models.Model):
     id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
+    referenced_category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name="referenced_category",
+        null=True,
+        default=None,
+    )
+    name = models.CharField(max_length=255, null=True, default="Nuova caratteristica")
 
     class Meta:
         constraints = [

@@ -1,7 +1,7 @@
-import TablePage from "./TablePage";
+import DataTable from "../components/DataTable";
 
 function Customer() {
-  return <TablePage modelName="customer" />;
+  return <DataTable modelName="customer" />;
 }
 
 export default Customer;

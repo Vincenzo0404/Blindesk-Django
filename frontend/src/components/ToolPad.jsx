@@ -1,6 +1,7 @@
 import { extendTheme } from "@mui/material/styles";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
-import Inventory2Icon from "@mui/icons-material/Inventory2";
+import AttachMoneySharpIcon from "@mui/icons-material/AttachMoneySharp";
+import InventorySharpIcon from "@mui/icons-material/InventorySharp";
 import { AppProvider } from "@toolpad/core";
 import { DashboardLayout } from "@toolpad/core";
 import { PageContainer } from "@toolpad/core";
@@ -21,15 +22,15 @@ const NAVIGATION = [
   {
     segment: "job",
     title: "Commesse",
-    icon: <PersonSharpIcon />,
+    icon: <AttachMoneySharpIcon />,
   },
   {
     kind: "divider",
   },
   {
-    segment: "category",
-    title: "Categorie",
-    icon: <Inventory2Icon />,
+    segment: "products",
+    title: "Prodotti",
+    icon: <InventorySharpIcon />,
   },
 ];
 
@@ -55,10 +56,10 @@ export default function ToolPad() {
       branding={{
         logo: <img src={logo} alt="Blindesk logo" />,
         title: "... è troppo ponfia!",
-        homeUrl: "/customers",
+        homeUrl: "/job",
       }}
     >
-      <DashboardLayout>
+      <DashboardLayout defaultSidebarCollapsed={true}>
         <PageContainer>
           <Grid container spacing={2}>
             <Outlet />

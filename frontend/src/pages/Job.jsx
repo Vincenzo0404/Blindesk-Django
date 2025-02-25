@@ -14,10 +14,11 @@ import {
 import JobForm from "../components/JobForm";
 import JobDetail from "../components/JobDetail";
 import { format } from "date-fns";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
-export default function OrderGrid() {
+export default function Job() {
   const [jobs, setJobs] = useState([]);
-  const [sortType, setSortType] = useState("date"); // Ordinamento predefinito
+  const [sortType, setSortType] = useState("created_at"); // Ordinamento predefinito
   const [formOpen, setFormOpen] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -75,6 +76,14 @@ export default function OrderGrid() {
       });
   };
 
+  const handleDelete = (jobId) => {
+    if (window.confirm("Sei sicuro di voler eliminare questa commessa?")) {
+      api.delete(`/api/job/delete/${jobId}/`).then(() => {
+        setJobs(jobs.filter((job) => job.id !== jobId));
+      });
+    }
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       {/* Select per ordinamento */}
@@ -115,6 +124,15 @@ export default function OrderGrid() {
                 <Typography variant="body2">
                   Data: {format(new Date(job.created_at), "dd/MM/yyyy")}
                 </Typography>
+
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(job.id);
+                  }}
+                >
+                  <DeleteIcon />
+                </Button>
               </CardContent>
             </Card>
           </Grid>

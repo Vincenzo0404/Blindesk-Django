@@ -38,11 +38,11 @@ const Form = ({ title, children, onSubmit, open, onClose }) => {
 };
 
 Form.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.node,
+  onSubmit: PropTypes.func,
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default Form;
