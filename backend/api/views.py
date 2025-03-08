@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -6,6 +7,43 @@ from rest_framework.response import Response
 from .forms import *
 from .models import *
 from .serializers import *
+
+
+# generic views for the API
+class ModelMetadata(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, model_name):
+        # Sostituisci 'api' con il nome effettivo della tua applicazione
+        app_name = "api"
+        model = apps.get_model(app_name, model_name)
+        if not model:
+            return Response({"error": "Model not found"}, status=404)
+
+        fields = []
+        for field in model._meta.get_fields():
+            # Escludi i campi relazionali che non sono ForeignKey
+            if field.is_relation and not field.many_to_one and not field.one_to_one:
+                continue
+
+            field_info = {
+                "name": field.name,
+                "type": field.get_internal_type(),
+                "choices": field.choices if hasattr(field, "choices") else None,
+            }
+
+            # Se il campo è una ForeignKey, aggiungi i possibili record come scelte
+            if field.get_internal_type() == "ForeignKey":
+                related_model = field.related_model
+                related_objects = related_model.objects.all()
+                field_info["type"] = "singleSelect"
+                field_info["choices"] = [
+                    {"id": obj.id, "display": str(obj)} for obj in related_objects
+                ]
+
+            fields.append(field_info)
+
+        return Response(fields)
 
 
 # Customers
@@ -141,6 +179,31 @@ class ProductCreate(generics.CreateAPIView):
 class ProductUpdate(generics.RetrieveUpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+
+# Product Features
+class ProductFeatureList(generics.ListCreateAPIView):
+
+    serializer_class = ProductFeatureSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        product_id = self.request.query_params.get("product", None)
+        if product_id is not None:
+            return ProductFeature.objects.filter(product_id=product_id)
+        return ProductFeature.objects.all()
+
+
+class ProductFeatureCreate(generics.CreateAPIView):
+    queryset = ProductFeature.objects.all()
+    serializer_class = ProductFeatureSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProductFeatureUpdate(generics.RetrieveUpdateAPIView):
+    queryset = ProductFeature.objects.all()
+    serializer_class = ProductFeatureSerializer
     permission_classes = [IsAuthenticated]
 
 

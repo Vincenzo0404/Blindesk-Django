@@ -11,7 +11,7 @@ import {
 import api from "../api";
 import Form from "./Form";
 
-const cities = ["Roma", "Aquila"];
+const cities = ["RM", "AQ"];
 
 const JobForm = ({ open, onClose }) => {
   const [customers, setCustomers] = useState([]);

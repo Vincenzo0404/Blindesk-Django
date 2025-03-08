@@ -5,6 +5,7 @@ from .category import Category
 
 class Feature(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, null=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
     referenced_category = models.ForeignKey(
         Category,
@@ -13,7 +14,6 @@ class Feature(models.Model):
         null=True,
         default=None,
     )
-    name = models.CharField(max_length=255, null=True, default="Nuova caratteristica")
 
     class Meta:
         constraints = [

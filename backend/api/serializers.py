@@ -55,12 +55,6 @@ class FeatureSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MonetizationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Monetization
-        fields = "__all__"
-
-
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

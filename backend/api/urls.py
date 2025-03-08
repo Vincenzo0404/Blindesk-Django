@@ -6,6 +6,12 @@ from .views import *
 # fmt: on
 
 urlpatterns = [
+    # generic views for the API
+    path(
+        "model-metadata/<str:model_name>/",
+        ModelMetadata.as_view(),
+        name="model-metadata",
+    ),
     # Customers
     path("customer/list/", CustomerList.as_view(), name="customer-list"),
     path("customer/update/<int:pk>/", CustomerUpdate.as_view(), name="customer-update"),
@@ -29,6 +35,22 @@ urlpatterns = [
     path("product/list/", ProductList.as_view(), name="product-list"),
     path("product/create/", ProductCreate.as_view(), name="product-create"),
     path("product/update/<int:pk>/", ProductUpdate.as_view(), name="product-update"),
+    # product features
+    path(
+        "productfeature/list/",
+        ProductFeatureList.as_view(),
+        name="product-feature-list",
+    ),
+    path(
+        "productfeature/create/",
+        ProductFeatureCreate.as_view(),
+        name="product-feature-create",
+    ),
+    path(
+        "productfeature/update/<int:pk>/",
+        ProductFeatureUpdate.as_view(),
+        name="product-feature-update",
+    ),
     # Suppliers
     path("supplier/list/", SupplierList.as_view(), name="supplier-list"),
     path("supplier/create/", SupplierCreate.as_view(), name="supplier-create"),

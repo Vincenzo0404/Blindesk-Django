@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
 import { Alert, Button } from "@mui/material";
@@ -20,7 +21,7 @@ function EditToolbar({ setRows, modelName, baseModel }) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
-        Add record
+        {modelName}
       </Button>
     </GridToolbarContainer>
   );
@@ -34,18 +35,18 @@ EditToolbar.propTypes = {
 
 export default function DataTable({
   modelName,
-  queryParams = {},
+  queryParams,
   onRowSelected,
   baseModel = {},
 }) {
   const [rows, setRows] = useState([]);
   const [error, setError] = useState(null);
+  const [columns, setColumns] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       setError(null);
 
-      // Convert queryParams object to query string
       const queryString = new URLSearchParams(queryParams).toString();
       const url = `/api/${modelName}/list/${queryString ? `?${queryString}` : ""}`;
 
@@ -57,15 +58,33 @@ export default function DataTable({
       }
     };
 
+    const fetchMetadata = async () => {
+      try {
+        const response = await api.get(`/api/model-metadata/${modelName}/`);
+        const metadata = response.data;
+
+        const columns = metadata.map((field) => ({
+          field: field.name,
+          headerName: field.name,
+          type: field.type === "IntegerField" ? "number" : "string",
+          editable: field.name !== "id",
+          ...(field.type === "singleSelect" && {
+            type: "singleSelect",
+            valueOptions: field.choices.map((choice) => ({
+              value: choice.id,
+              label: choice.display,
+            })),
+          }),
+        }));
+
+        setColumns(columns);
+      } catch (err) {
+        setError(err);
+      }
+    };
+    fetchMetadata();
     fetchData();
   }, [modelName, queryParams]);
-
-  const columns =
-    rows && rows.length > 0
-      ? Object.keys(rows[0]).map((key) => {
-          return { field: key, editable: key !== "id" };
-        })
-      : [];
 
   const handleRowSelection = (selectionModel) => {
     const selectedRow = rows.find((row) => row.id === selectionModel[0]);

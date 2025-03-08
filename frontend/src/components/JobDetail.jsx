@@ -30,7 +30,7 @@ const JobDetail = ({ job, open, onClose }) => {
   const handleSubmit = () => {
     console.log(job);
     api
-      .put(`/api/job/update/${job.id}/`, { stage: status })
+      .put(`/api/job/update/${job.id}/`, { ...job, stage: status })
       .then((response) => {
         if (response.data.success) {
           onClose();
