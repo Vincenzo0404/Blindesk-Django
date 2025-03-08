@@ -22,3 +22,5 @@ media/
 
 # macOS
 .DS_Store
+
+start.py
